@@ -17,7 +17,7 @@ span {
 #todaslascartas,
 #todaslascartasordenadas > div {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 .card {
   width: 125px;
@@ -25,7 +25,7 @@ span {
   background-color: white;
   border-radius: 10px;
   padding: 16px 8px;
-  margin: 100px;
+  margin: 40px;
 }
 .picaup {
   float: left;

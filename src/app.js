@@ -2,7 +2,7 @@
 import "bootstrap";
 import "./style.css";
 
-function soloNumeros(e) {
+/*function soloNumeros(e) {
   let key = e.keyCode || e.which,
     tecla = String.fromCharCode(key).toLowerCase(),
     numeros = "1234567",
@@ -18,7 +18,7 @@ function soloNumeros(e) {
   if (numeros.indexOf(tecla) == -1 && !tecla_especial) {
     return false;
   }
-}
+}*/
 
 let valorinput;
 let contenidoDeCartas;
@@ -79,6 +79,7 @@ function rendercartas(contenidoCarta) {
   // myDivvalor.id = "myDivvalor";
   //document.getElementById (myDivvalor);
   myDivvalor.classList.add("card-numero");
+  //por recomendadion nos dijeron, si una carta tiene valor 11 entonces dibuja j y asi con cada una de las letras para poder arreglar eso//
 
   let myDivpicadown = document.createElement("div");
   myDivpicadown.innerHTML = contenidoCarta.palo;
@@ -102,7 +103,7 @@ function rendercartas(contenidoCarta) {
   return myDivcartas;
 }
 
-let valor = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
+let valor = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 let palo = ["♦", "♥", "♠", "♣"];
 
 //Genera la cantidad de cartas segun input
@@ -115,7 +116,7 @@ function generateCarta(numeroCartas) {
 }
 // contenido random
 function cartaRandom() {
-  let aleatoriovalor = Math.floor(Math.random() * 12);
+  let aleatoriovalor = Math.floor(Math.random() * 13);
   let aleatoriopalo = Math.floor(Math.random() * 4);
   let carta = {
     palo: palo[aleatoriopalo],
@@ -144,36 +145,34 @@ botonDraw.addEventListener("click", function() {
   }
 });
 
-function bubbleSortCartas(cartas) {
+function selectionSortCartas(cartas) {
   let arr = Array.from(cartas);
   let contenedorSort = document.getElementById("todaslascartasordenadas");
-  let stop = arr.length - 1;
+  let arreglo = arr.length - 1;
   let nombreContenedor;
   let cartaSort;
-
-  while (stop >= 0) {
-    let index = 0;
-    while (index < stop) {
-      if (arr[index].valor > arr[index + 1].valor) {
-        let aux = arr[index];
-        arr[index] = arr[index + 1];
-        arr[index + 1] = aux;
-        console.log(arr, index);
-        nombreContenedor = "paso-" + index + "-" + stop;
-        cartaSort = document.createElement("div");
-        cartaSort.id = nombreContenedor;
-        contenedorSort.appendChild(cartaSort);
-        dibujaCartas(arr, nombreContenedor);
+  let min = 0;
+  while (min < arreglo) {
+    for (let i = min + 1; i < arr.length - 1; i++) {
+      if (arr[min].valor > arr[i].valor) {
+        let aux = arr[min];
+        arr[min] = arr[i];
+        arr[i] = aux;
+        console.log(arr, min);
       }
-      index++;
     }
-
-    stop--;
+    nombreContenedor = "paso-" + min + "-" + arreglo;
+    cartaSort = document.createElement("div");
+    cartaSort.id = nombreContenedor;
+    contenedorSort.appendChild(cartaSort);
+    dibujaCartas(arr, nombreContenedor);
+    min++;
   }
+  arr = [];
 }
 let botonSort = document.querySelector("#botonSort");
 botonSort.addEventListener("click", function() {
   document.querySelector("#todaslascartasordenadas").innerHTML = "";
 
-  bubbleSortCartas(contenidoDeCartas);
+  selectionSortCartas(contenidoDeCartas);
 });
