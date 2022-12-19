@@ -51,43 +51,32 @@ function rendercartas(contenidoCarta) {
 }*/
 
   let myDivcartas = document.createElement("div");
-  //nombreid = "myDivcartas"+i;
-  //myDivcartas.id = nombreid;
-  //myDivcartas.innerHTML = document.getElementById("todaslascartas");
   myDivcartas.classList.add("card");
-  //document.getElementById("todaslascartas").
-
-  //todaslascartas.innerHTML= cartaRandom() ;
-  // let arraycarta = cartaRandom();
 
   let myDivpicaup = document.createElement("div");
   myDivpicaup.innerHTML = contenidoCarta.palo;
-  //document.getElementById(nombreid);
-  //myDivpicaup.innerText = arraycarta[0];
-  ///document.getElementById(nombreid).appendChild(myDivpicaup);
-  // myDivpicaup.id = "myDivpicaup";
-  //document.getElementById (myDivpicaup);
   myDivpicaup.classList.add("picaup");
 
   //alert(myDiv)
 
   let myDivvalor = document.createElement("div");
-  myDivvalor.innerHTML = contenidoCarta.contenido;
-  //document.getElementById(nombreid);
-  //myDivvalor.innerText = arraycarta[1];
-  //document.getElementById(nombreid).appendChild(myDivvalor);
-  // myDivvalor.id = "myDivvalor";
-  //document.getElementById (myDivvalor);
+  if (contenidoCarta.contenido == 1) {
+    myDivvalor.innerHTML = "A";
+  } else if (contenidoCarta.contenido == 11) {
+    myDivvalor.innerHTML = "J";
+  } else if (contenidoCarta.contenido == 12) {
+    myDivvalor.innerHTML = "Q";
+  } else if (contenidoCarta.contenido == 13) {
+    myDivvalor.innerHTML = "K";
+  } else {
+    myDivvalor.innerHTML = contenidoCarta.contenido;
+  }
   myDivvalor.classList.add("card-numero");
+
   //por recomendadion nos dijeron, si una carta tiene valor 11 entonces dibuja j y asi con cada una de las letras para poder arreglar eso//
 
   let myDivpicadown = document.createElement("div");
   myDivpicadown.innerHTML = contenidoCarta.palo;
-  //document.getElementById(nombreid);
-  //myDivpicadown.innerText = arraycarta[2];
-  //document.getElementById(nombreid).appendChild(myDivpicadown);
-  //myDivpicadown.id = "myDivpicadown";
-  //document.getElementById (myDivpicadown);
   myDivpicadown.classList.add("picadown");
 
   myDivcartas.appendChild(myDivpicaup);
@@ -123,6 +112,7 @@ function cartaRandom() {
     valor: aleatoriovalor,
     contenido: valor[aleatoriovalor]
   };
+
   //cambie, la funcion que en vez de  generar un array me genera un objeto
   // carta.palo = (palo[aleatoriopalo]);
   //carta.valor = (valor[aleatoriovalor]);
@@ -151,10 +141,11 @@ function selectionSortCartas(cartas) {
   let arreglo = arr.length - 1;
   let nombreContenedor;
   let cartaSort;
+
   let min = 0;
   while (min < arreglo) {
-    for (let i = min + 1; i < arr.length - 1; i++) {
-      if (arr[min].valor > arr[i].valor) {
+    for (let i = min + 1; i < arr.length; i++) {
+      if (arr[min].valor >= arr[i].valor) {
         let aux = arr[min];
         arr[min] = arr[i];
         arr[i] = aux;
@@ -164,6 +155,7 @@ function selectionSortCartas(cartas) {
     nombreContenedor = "paso-" + min + "-" + arreglo;
     cartaSort = document.createElement("div");
     cartaSort.id = nombreContenedor;
+    cartaSort.innerHTML = "<h3>" + min + "</h3>";
     contenedorSort.appendChild(cartaSort);
     dibujaCartas(arr, nombreContenedor);
     min++;
